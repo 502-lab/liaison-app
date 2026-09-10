@@ -15,5 +15,3 @@ linter:
   rules:
     # 초반 팀에서 모든 public 멤버에 문서 주석을 요구하면 코드보다 주석 쓰는 시간이 길어진다.
     public_member_api_docs: false
-    # 화면 위젯 파일은 한 파일에 private 위젯이 여러 개 들어가는 게 자연스럽다.
-    one_member_abstracts: false
