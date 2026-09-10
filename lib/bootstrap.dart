@@ -5,6 +5,7 @@ import 'package:liaison_app/app/fake_overrides.dart';
 import 'package:liaison_app/core/config/app_config.dart';
 import 'package:liaison_app/core/config/app_config_provider.dart';
 import 'package:liaison_app/core/config/flavor.dart';
+import 'package:liaison_app/core/notification/notification_service_provider.dart';
 
 /// 모든 flavor 진입점이 공유하는 초기화.
 Future<void> bootstrap(Flavor flavor) async {
@@ -18,6 +19,8 @@ Future<void> bootstrap(Flavor flavor) async {
       if (config.useFakeRepositories) ...fakeOverrides(),
     ],
   );
+
+  await container.read(notificationServiceProvider).initialize();
 
   runApp(UncontrolledProviderScope(container: container, child: const App()));
 }
