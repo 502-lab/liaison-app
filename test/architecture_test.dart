@@ -86,9 +86,7 @@ void main() {
       final owner = featurePattern.firstMatch(file.path)?.group(1);
       if (owner == null) continue;
       for (final import in importsOf(file)) {
-        final target = RegExp('features/([^/]+)/')
-            .firstMatch(import)
-            ?.group(1);
+        final target = RegExp('features/([^/]+)/').firstMatch(import)?.group(1);
         if (target == null) continue;
         expect(
           target,

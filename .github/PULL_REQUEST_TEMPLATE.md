@@ -31,6 +31,8 @@
 
 <!-- 리뷰어가 이 변경을 어떻게 확인할 수 있는지 적어주세요 -->
 
+- [ ] `fvm flutter analyze` 통과
+- [ ] `fvm flutter test` 통과
 -
 
 ## 🔗 관련 이슈
