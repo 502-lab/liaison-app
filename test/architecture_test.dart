@@ -95,7 +95,7 @@ void main() {
           isTrue,
           reason:
               '${file.path}: "$import" import 금지. features/$target/data는 '
-              '같은 feature의 data 또는 features/$target/${target}_di.dart'
+              '같은 feature의 data 또는 features/$target/${target}_di.dart '
               '에서만 import한다. ${target}_di.dart를 통해 접근하라',
         );
       }
