@@ -11,7 +11,10 @@ sealed class AppException implements Exception {
     NetworkException() => 'NetworkException: $message',
     UnauthorizedException() => 'UnauthorizedException: $message',
     ServerException() => 'ServerException: $message',
-    UnknownException() => 'UnknownException: $message',
+    UnknownException(:final debugMessage) =>
+      debugMessage == null
+          ? 'UnknownException: $message'
+          : 'UnknownException: $message ($debugMessage)',
   };
 }
 
@@ -32,7 +35,10 @@ final class ServerException extends AppException {
   final int statusCode;
 }
 
-/// 분류되지 않은 오류.
+/// 분류되지 않은 오류. 사용자에게는 고정 문구만 보여주고,
+/// 기술적인 원인은 [debugMessage]에 담아 로그에서만 쓴다.
 final class UnknownException extends AppException {
-  const new([String? message]) : super(message ?? '알 수 없는 오류가 발생했습니다');
+  const new({this.debugMessage}) : super('알 수 없는 오류가 발생했습니다');
+
+  final String? debugMessage;
 }

@@ -17,6 +17,6 @@ AppException mapDioException(DioException e) {
     case DioExceptionType.cancel:
     case DioExceptionType.badCertificate:
     case DioExceptionType.unknown:
-      return UnknownException(e.message);
+      return UnknownException(debugMessage: e.message);
   }
 }

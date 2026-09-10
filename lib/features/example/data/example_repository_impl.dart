@@ -19,7 +19,7 @@ class ExampleRepositoryImpl implements ExampleRepository {
     } on DioException catch (e) {
       throw mapDioException(e);
     } on Object catch (e) {
-      throw UnknownException(e.toString());
+      throw UnknownException(debugMessage: e.toString());
     }
   }
 }

@@ -16,6 +16,19 @@ class _StubRepository implements ExampleRepository {
   Future<List<ExampleItem>> fetchItems() => _result();
 }
 
+class _FailThenSucceedRepository implements ExampleRepository {
+  int _callCount = 0;
+
+  @override
+  Future<List<ExampleItem>> fetchItems() async {
+    _callCount++;
+    if (_callCount == 1) {
+      throw const NetworkException();
+    }
+    return const [ExampleItem(id: '1', title: '재시도 후 항목')];
+  }
+}
+
 Widget _app(ExampleRepository repository) {
   return ProviderScope(
     overrides: [exampleRepositoryProvider.overrideWith((ref) => repository)],
@@ -52,5 +65,18 @@ void main() {
 
     expect(find.text('네트워크에 연결할 수 없습니다'), findsOneWidget);
     expect(find.text('다시 시도'), findsOneWidget);
+  });
+
+  testWidgets('다시 시도를 누르면 refresh가 build를 다시 실행한다', (tester) async {
+    await tester.pumpWidget(_app(_FailThenSucceedRepository()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('네트워크에 연결할 수 없습니다'), findsOneWidget);
+
+    await tester.tap(find.text('다시 시도'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('재시도 후 항목'), findsOneWidget);
+    expect(find.text('네트워크에 연결할 수 없습니다'), findsNothing);
   });
 }

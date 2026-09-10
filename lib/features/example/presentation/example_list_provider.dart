@@ -17,9 +17,7 @@ class ExampleList extends _$ExampleList {
   }
 
   Future<void> refresh() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(
-      () => ref.read(exampleRepositoryProvider).fetchItems(),
-    );
+    ref.invalidateSelf();
+    await future;
   }
 }

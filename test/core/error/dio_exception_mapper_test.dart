@@ -51,5 +51,12 @@ void main() {
         expect(mapDioException(_dio(type)), isA<UnknownException>());
       }
     });
+
+    test('UnknownException의 message는 사용자용 고정 문구다', () {
+      final result = mapDioException(_dio(DioExceptionType.unknown));
+
+      expect(result, isA<UnknownException>());
+      expect(result.message, '알 수 없는 오류가 발생했습니다');
+    });
   });
 }
