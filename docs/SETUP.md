@@ -91,4 +91,5 @@ fvm dart fix --apply
 | `part 'xxx.g.dart'` 파일이 없다는 에러 | 4번의 build_runner 명령 실행 |
 | `flutter run`이 `lib/main.dart`를 찾는다 | `-t lib/main_dev.dart`를 빠뜨림 |
 | `--flavor` 없이 실행해서 gradle 에러 | `--flavor dev` 추가 |
+| 시작하자마자 `StateError` (FLAVOR / API_BASE_URL) | `--dart-define-from-file=env/<flavor>.json`을 진입점과 맞춰 넘겼는지 확인 |
 | Xcode에서 `xcodebuild requires Xcode` | 1번의 `xcode-select` 명령 실행 |

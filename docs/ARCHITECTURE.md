@@ -55,6 +55,7 @@ presentation은 이 파일을 import해서 Repository를 얻는다.
 - 테스트는 `ProviderContainer.test(overrides: [...])`로 Repository를 바꿔 끼운다.
 - Riverpod 3는 Provider가 실패하면 기본으로 최대 10회 지수 백오프 재시도를 하고, 그동안 상태가 `AsyncError`가 아니라 `AsyncLoading`이라 화면에 에러가 보이지 않는다. 이 앱은 이를 끈다: `core/riverpod/retry_policy.dart`가 `Duration? noRetry(int retryCount, Object error) => null;`를 제공하고, 서버 데이터 Provider는 `@Riverpod(retry: noRetry)`를 붙인다 (`features/example/presentation/example_list_provider.dart` 참고). `bootstrap.dart`도 `ProviderContainer`에 `retry: noRetry`를 전달한다.
 - `Ref`, `Override`는 `package:riverpod_annotation/riverpod_annotation.dart`에서 import한다. `flutter_riverpod`은 위젯(`ConsumerWidget`, `ProviderScope`)과 `bootstrap.dart`의 `ProviderContainer`에서만 쓴다.
+- 앱 수명 동안 살아있어야 하는 인프라 Provider(`dio`, `tokenStorage`, `router`)는 `@Riverpod(keepAlive: true)`로 만들고 `ref.onDispose`로 정리한다. 화면 상태 Provider는 기본(auto-dispose)으로 둔다.
 
 ## 코드 스타일 메모
 
@@ -66,6 +67,8 @@ very_good_analysis 11이 Dart 3.13의 `unnecessary_type_name_in_constructor`를 
 - dio 예외는 Repository 구현체에서 `mapDioException`으로 변환한다. 화면은 `DioException`을 모른다.
 - Repository 구현체는 `on DioException`은 `mapDioException`으로, 그 외 예외(`on Object`)는 `UnknownException`으로 감싼다. 화면에는 항상 `AppException`만 도달한다.
 - 전역 처리(토큰 만료 시 로그인 이동 등)는 `core/network/` 인터셉터와 `app/router/`의 redirect가 맡는다.
+- `bootstrap.dart`가 `FlutterError.onError`와 `PlatformDispatcher.onError`로 잡히지 않은 오류를 로그에 남긴다 (Crashlytics 도입 시 여기서 보고).
+- `UnknownException`의 `message`는 사용자용 문구이고 기술 정보는 `debugMessage`에 담는다.
 
 ## 환경(flavor)
 
@@ -82,6 +85,8 @@ iOS scheme/configuration은 아직 생성되지 않았다. Xcode, CocoaPods, `su
 Android flavor 정의는 `android/app/flavorizr.gradle.kts`에 있다.
 
 `env/*.json`에는 시크릿을 넣지 않는다. 값은 `AppConfig.fromEnvironment`에서 읽는다.
+
+`env/*.json`의 `FLAVOR` 값이 진입점과 다르거나 `API_BASE_URL`이 비어 있으면(가짜 모드가 아닐 때) 앱이 시작 시점에 StateError로 멈춘다.
 
 ## Firebase
 
