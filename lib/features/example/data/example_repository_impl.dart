@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:liaison_app/core/error/app_exception.dart';
 import 'package:liaison_app/core/error/dio_exception_mapper.dart';
 import 'package:liaison_app/features/example/data/dto/example_item_dto.dart';
 import 'package:liaison_app/features/example/data/example_api.dart';
@@ -17,6 +18,8 @@ class ExampleRepositoryImpl implements ExampleRepository {
       return dtos.map((dto) => dto.toDomain()).toList();
     } on DioException catch (e) {
       throw mapDioException(e);
+    } on Object catch (e) {
+      throw UnknownException(e.toString());
     }
   }
 }

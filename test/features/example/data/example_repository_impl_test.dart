@@ -37,4 +37,13 @@ void main() {
 
     expect(repository.fetchItems, throwsA(isA<NetworkException>()));
   });
+
+  test('Dio가 아닌 오류는 UnknownException으로 바뀐다', () async {
+    when(api.fetchItems).thenThrow(StateError('bad body'));
+
+    await expectLater(
+      repository.fetchItems(),
+      throwsA(isA<UnknownException>()),
+    );
+  });
 }
