@@ -15,7 +15,7 @@ App Store에서 Xcode를 설치한 뒤:
 ```bash
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 sudo xcodebuild -runFirstLaunch
-sudo gem install xcodeproj   # flutter_flavorizr의 iOS 처리기가 사용
+sudo gem install xcodeproj   # flutter_flavorizr의 iOS 처리기가 사용한다
 ```
 
 Android Studio를 한 번 실행해 SDK, 플랫폼 도구, 에뮬레이터를 설치한다.
@@ -76,7 +76,12 @@ PR 올리기 전에 세 개 모두 통과해야 한다.
 fvm flutter analyze
 fvm flutter test
 fvm dart format --set-exit-if-changed lib test
-fvm dart fix --apply   # lint가 제안하는 자동 수정 적용
+```
+
+lint가 옛 생성자 형태 같은 자동 수정 가능한 경고를 내면 아래로 고친 뒤 위 세 명령을 다시 돌린다.
+
+```bash
+fvm dart fix --apply
 ```
 
 ## 자주 겪는 문제

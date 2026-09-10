@@ -54,7 +54,7 @@ presentation은 이 파일을 import해서 Repository를 얻는다.
 - 실제 ↔ 가짜 Repository 교체는 override로 한다. `env/dev.json`의 `USE_FAKE_REPOSITORIES`가 true면 `app/fake_overrides.dart`의 목록이 적용된다.
 - 테스트는 `ProviderContainer.test(overrides: [...])`로 Repository를 바꿔 끼운다.
 - Riverpod 3는 Provider가 실패하면 기본으로 최대 10회 지수 백오프 재시도를 하고, 그동안 상태가 `AsyncError`가 아니라 `AsyncLoading`이라 화면에 에러가 보이지 않는다. 이 앱은 이를 끈다: `core/riverpod/retry_policy.dart`가 `Duration? noRetry(int retryCount, Object error) => null;`를 제공하고, 서버 데이터 Provider는 `@Riverpod(retry: noRetry)`를 붙인다 (`features/example/presentation/example_list_provider.dart` 참고). `bootstrap.dart`도 `ProviderContainer`에 `retry: noRetry`를 전달한다.
-- `Ref`, `Override`는 `package:riverpod_annotation/riverpod_annotation.dart`에서 import한다. 위젯(`ConsumerWidget`, `ProviderScope`)만 `flutter_riverpod`을 쓴다.
+- `Ref`, `Override`는 `package:riverpod_annotation/riverpod_annotation.dart`에서 import한다. `flutter_riverpod`은 위젯(`ConsumerWidget`, `ProviderScope`)과 `bootstrap.dart`의 `ProviderContainer`에서만 쓴다.
 
 ## 코드 스타일 메모
 
