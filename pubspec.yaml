@@ -35,7 +35,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.4.3
-  flutter_secure_storage: ^11.0.0
+  # 11.x는 compileSdk 37을 요구하는데 SDK 저장소에 android-37이 없어 빌드 실패. SDK/플러그인 정리 후 올린다.
+  flutter_secure_storage: ^10.3.2
   freezed_annotation: ^3.1.0
   go_router: ^18.0.1
   json_annotation: ^4.12.0
