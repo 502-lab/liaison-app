@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 /// 앱 전체에서 쓰는 예외. 화면은 이 타입만 본다.
 ///
 /// 세분화는 실제 화면이 구분해서 보여줘야 할 때 추가한다.
@@ -9,7 +7,12 @@ sealed class AppException implements Exception {
   final String message;
 
   @override
-  String toString() => '${objectRuntimeType(this, 'AppException')}: $message';
+  String toString() => switch (this) {
+    NetworkException() => 'NetworkException: $message',
+    UnauthorizedException() => 'UnauthorizedException: $message',
+    ServerException() => 'ServerException: $message',
+    UnknownException() => 'UnknownException: $message',
+  };
 }
 
 /// 네트워크 연결 실패, 타임아웃.
