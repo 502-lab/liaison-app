@@ -30,7 +30,8 @@ jobs:
 
       - name: Check generated files are committed
         run: |
-          if ! git diff --exit-code; then
+          git add -A
+          if ! git diff --cached --exit-code; then
             echo "::error::생성 파일이 최신이 아닙니다. build_runner를 실행하고 결과를 커밋하세요."
             exit 1
           fi
