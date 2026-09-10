@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'token_storage_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 TokenStorage tokenStorage(Ref ref) {
   return const SecureTokenStorage(FlutterSecureStorage());
 }

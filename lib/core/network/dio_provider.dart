@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'dio_provider.g.dart';
 
 /// 앱 전체가 공유하는 HTTP 클라이언트.
-@riverpod
+@Riverpod(keepAlive: true)
 Dio dio(Ref ref) {
   final config = ref.watch(appConfigProvider);
   final dio = Dio(
@@ -20,7 +20,10 @@ Dio dio(Ref ref) {
   );
   dio.interceptors.add(AuthInterceptor(ref.watch(tokenStorageProvider)));
   if (config.flavor == Flavor.dev) {
-    dio.interceptors.add(LogInterceptor(responseBody: true));
+    dio.interceptors.add(
+      LogInterceptor(responseBody: true, requestHeader: false),
+    );
   }
+  ref.onDispose(() => dio.close(force: true));
   return dio;
 }
