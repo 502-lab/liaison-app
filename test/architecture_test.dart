@@ -14,7 +14,7 @@ void main() {
       .toList();
 
   final importPattern = RegExp(
-    r'''^import\s+['"]([^'"]+)['"]''',
+    r'''^(?:import|export)\s+['"]([^'"]+)['"]''',
     multiLine: true,
   );
   final featurePattern = RegExp('lib/features/([^/]+)/');
@@ -76,6 +76,27 @@ void main() {
           import.contains('/presentation/'),
           isFalse,
           reason: '${file.path}: data에서 presentation import 금지',
+        );
+      }
+    }
+  });
+
+  test('feature의 data는 같은 feature의 data 또는 <feature>_di.dart만 import한다', () {
+    final dataImportPattern = RegExp('features/([^/]+)/data/');
+    for (final file in files) {
+      for (final import in importsOf(file)) {
+        final target = dataImportPattern.firstMatch(import)?.group(1);
+        if (target == null) continue;
+        final allowed =
+            file.path.contains('lib/features/$target/data/') ||
+            file.path.endsWith('lib/features/$target/${target}_di.dart');
+        expect(
+          allowed,
+          isTrue,
+          reason:
+              '${file.path}: "$import" import 금지. features/$target/data는 '
+              '같은 feature의 data 또는 features/$target/${target}_di.dart'
+              '에서만 import한다. ${target}_di.dart를 통해 접근하라',
         );
       }
     }
