@@ -95,3 +95,33 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor-type"
+  flavors:
+    dev:
+      app:
+        name: "Liaison Dev"
+      android:
+        applicationId: "com.liaison.app.dev"
+      ios:
+        bundleId: "com.liaison.app.dev"
+    prod:
+      app:
+        name: "Liaison"
+      android:
+        applicationId: "com.liaison.app"
+      ios:
+        bundleId: "com.liaison.app"
+  instructions:
+    - assets:download
+    - assets:extract
+    - android:androidManifest
+    - android:flavorizrGradle
+    - android:buildGradle
+    - android:dummyAssets
+    - android:icons
+    - ide:config
+    - assets:clean

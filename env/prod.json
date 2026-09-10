@@ -1,0 +1,4 @@
+{
+  "API_BASE_URL": "https://api.liaison.example",
+  "USE_FAKE_REPOSITORIES": false
+}
