@@ -124,5 +124,13 @@ flavorizr:
     - android:buildGradle
     - android:dummyAssets
     - android:icons
+    - ios:podfile
+    - ios:xcconfig
+    - ios:buildTargets
+    - ios:schema
+    - ios:dummyAssets
+    - ios:icons
+    - ios:plist
+    - ios:launchScreen
     - ide:config
     - assets:clean

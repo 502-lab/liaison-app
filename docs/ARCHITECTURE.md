@@ -80,9 +80,11 @@ very_good_analysis 11이 Dart 3.13의 `unnecessary_type_name_in_constructor`를 
 
 실행: `fvm flutter run --flavor dev -t lib/main_dev.dart --dart-define-from-file=env/dev.json`
 
-iOS scheme/configuration은 아직 생성되지 않았다. Xcode, CocoaPods, `sudo gem install xcodeproj`가 준비된 머신에서 `pubspec.yaml`의 `flavorizr.instructions`에 `ios:podfile, ios:xcconfig, ios:buildTargets, ios:schema, ios:dummyAssets, ios:icons, ios:plist, ios:launchScreen`을 추가하고 `fvm dart run flutter_flavorizr`를 실행한다. 새 프로젝트 기준 도구라 실행 전에 `git status`가 깨끗한지 확인하고, 결과를 커밋 전에 검토한다.
-
 Android flavor 정의는 `android/app/flavorizr.gradle.kts`에 있다.
+
+iOS는 flavor마다 Xcode scheme(`dev`, `prod`)과 configuration(`Debug-dev`, `Release-prod` 등 6개)이 있다. 값은 `ios/Flutter/<flavor><Config>.xcconfig`에 있고, `Info.plist`의 앱 이름과 LaunchScreen은 그 xcconfig의 `BUNDLE_DISPLAY_NAME`, `ASSET_PREFIX`를 읽는다. `ios/Podfile`의 `project 'Runner', {...}` 매핑은 이 configuration 이름과 맞아야 한다.
+
+flavor를 추가하거나 Bundle ID를 바꿀 때는 `pubspec.yaml`의 `flavorizr` 항목을 고치고 `fvm dart run flutter_flavorizr -f`를 다시 실행한다. Xcode, CocoaPods, `xcodeproj` gem이 있어야 iOS 처리기가 돈다(`docs/SETUP.md` 1번). 프로젝트 파일을 통째로 다시 쓰는 도구라 실행 전에 `git status`가 깨끗한지 확인하고, 결과를 커밋 전에 검토한다.
 
 `env/*.json`에는 시크릿을 넣지 않는다. 값은 `AppConfig.fromEnvironment`에서 읽는다.
 
