@@ -6,11 +6,18 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Read Flutter version from .fvmrc
         id: fvmrc
@@ -41,6 +48,9 @@ jobs:
 
       - name: Analyze
         run: flutter analyze
+
+      - name: Analyze (riverpod_lint)
+        run: dart analyze --fatal-infos
 
       - name: Test
         run: flutter test

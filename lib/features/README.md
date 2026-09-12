@@ -15,7 +15,7 @@
 11. **presentation/<name>_screen.dart**: 로딩 · 에러 · 빈 상태 · 데이터 네 가지를 모두 다룬다.
 12. **app/router/app_router.dart**에 경로 추가.
 13. **테스트**: `test/features/<name>/`에 DTO, Repository 구현체, Provider, 화면 테스트. `example`의 테스트를 복사해서 시작한다.
-14. `fvm dart run build_runner build --delete-conflicting-outputs && fvm dart format lib test && fvm flutter analyze && fvm flutter test`
+14. `fvm dart run build_runner build --delete-conflicting-outputs && fvm dart format lib test && fvm flutter analyze && fvm dart analyze && fvm flutter test` (`dart analyze`가 riverpod_lint를 실행한다)
 
 역할(학생/선생님/학부모)에 따라 화면이 다르면 `presentation/student/`, `presentation/teacher/`처럼 presentation 안에서만 나눈다. feature 자체를 역할별로 만들지 않는다.
 

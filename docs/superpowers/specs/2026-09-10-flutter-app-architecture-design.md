@@ -172,7 +172,7 @@ UseCase 계층은 두지 않는다. Provider가 Repository를 직접 호출한�
 ### lint
 
 - `analysis_options.yaml`에 `very_good_analysis`를 include하고, 팀이 감당하기 어려운 규칙만 명시적으로 끈다 (끄는 이유를 주석으로 남긴다).
-- `riverpod_lint`를 analyzer 플러그인으로 등록해 Riverpod 오용을 잡는다. `flutter analyze`가 함께 실행한다.
+- `riverpod_lint`를 analyzer 플러그인으로 등록해 Riverpod 오용을 잡는다. analyzer 플러그인은 `dart analyze`에서만 실행되므로(`flutter analyze`는 실행하지 않음) CI와 로컬 확인에서 두 명령을 모두 돌린다.
 - 계층 규칙(2장)은 `test/architecture_test.dart`가 `lib/` 아래 모든 Dart 파일의 import 문을 검사하는 방식으로 강제한다. 서드파티 import lint는 유지보수 상태가 들쭉날쭉해 채택하지 않는다. `always_use_package_imports` 규칙(very_good_analysis 포함)이 켜져 있어 package import만 검사하면 된다. 위반 시 `flutter test`가 실패하므로 CI에서 잡힌다.
 
 ### 문서
@@ -205,7 +205,7 @@ UseCase 계층은 두지 않는다. Provider가 Repository를 직접 호출한�
 
 - `.github/workflows/flutter-ci.yml`을 추가한다. 기존 Discord 알림 워크플로우와 같은 폴더.
 - 트리거: `pull_request` (main 대상), `push` (main).
-- 단계: checkout → Flutter 설치 (`.fvmrc`의 버전을 읽어 사용) → `flutter pub get` → `build_runner build` → 생성 파일 diff 검사 → `flutter analyze` → `flutter test`.
+- 단계: checkout → Flutter 설치 (`.fvmrc`의 버전을 읽어 사용) → `flutter pub get` → `build_runner build` → 생성 파일 diff 검사 → `flutter analyze` → `dart analyze` → `flutter test`.
 - 러너는 `ubuntu-latest`. Android APK 빌드 검증은 시간이 오래 걸리므로 초반에는 포함하지 않고, 릴리즈 브랜치 전략이 정해지면 추가한다.
 - iOS 빌드 검증은 포함하지 않는다 (1장 제외 항목).
 

@@ -70,10 +70,11 @@ cd ios && pod install && cd ..
 
 ## 6. 확인 명령
 
-PR 올리기 전에 세 개 모두 통과해야 한다.
+PR 올리기 전에 네 개 모두 통과해야 한다.
 
 ```bash
 fvm flutter analyze
+fvm dart analyze      # riverpod_lint는 이 명령에서만 실행된다
 fvm flutter test
 fvm dart format --set-exit-if-changed lib test
 ```

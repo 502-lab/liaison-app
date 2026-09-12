@@ -9,26 +9,29 @@ part of 'app_config_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// bootstrap에서 반드시 override한다. override 없이 읽으면 즉시 실패해서
-/// 설정 누락을 빨리 알 수 있다.
+/// 설정 누락을 빨리 알 수 있다 (재시도 없이 바로 실패하도록 noRetry).
+/// keepAlive인 인프라 Provider(dio 등)가 watch하므로 keepAlive여야 한다.
 
 @ProviderFor(appConfig)
 final appConfigProvider = AppConfigProvider._();
 
 /// bootstrap에서 반드시 override한다. override 없이 읽으면 즉시 실패해서
-/// 설정 누락을 빨리 알 수 있다.
+/// 설정 누락을 빨리 알 수 있다 (재시도 없이 바로 실패하도록 noRetry).
+/// keepAlive인 인프라 Provider(dio 등)가 watch하므로 keepAlive여야 한다.
 
 final class AppConfigProvider
     extends $FunctionalProvider<AppConfig, AppConfig, AppConfig>
     with $Provider<AppConfig> {
   /// bootstrap에서 반드시 override한다. override 없이 읽으면 즉시 실패해서
-  /// 설정 누락을 빨리 알 수 있다.
+  /// 설정 누락을 빨리 알 수 있다 (재시도 없이 바로 실패하도록 noRetry).
+  /// keepAlive인 인프라 Provider(dio 등)가 watch하므로 keepAlive여야 한다.
   AppConfigProvider._()
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noRetry,
         name: r'appConfigProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -55,4 +58,4 @@ final class AppConfigProvider
   }
 }
 
-String _$appConfigHash() => r'c3d931773e2e53803b32e7c054acab04ef4b6969';
+String _$appConfigHash() => r'1680e155f8d16f004bd249fef8a5418ed91fd8a1';

@@ -45,7 +45,7 @@ final class ExampleListProvider
   ExampleList create() => ExampleList();
 }
 
-String _$exampleListHash() => r'cdced4f947229dd50798b852895a1994f42e8297';
+String _$exampleListHash() => r'20c8294b33c4143cd64a5eca4132ae5e7456987c';
 
 /// 서버 데이터를 다루는 상태는 AsyncNotifier로 만든다.
 /// 예외는 삼키지 않고 AsyncError로 흘려보낸다. 화면이 표시를 결정한다.

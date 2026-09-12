@@ -16,8 +16,10 @@ class ExampleList extends _$ExampleList {
     return ref.watch(exampleRepositoryProvider).fetchItems();
   }
 
+  /// 실패는 state(AsyncError)로 화면에 전달되므로 여기서 다시 던지지 않는다.
+  /// 던지면 버튼 콜백에서 버려진 Future가 uncaught error가 된다.
   Future<void> refresh() async {
     ref.invalidateSelf();
-    await future;
+    await future.then<void>((_) {}, onError: (_) {});
   }
 }

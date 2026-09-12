@@ -36,20 +36,51 @@ void main() {
     }
   });
 
-  test('domain은 Flutter, dio, riverpod을 import하지 않는다', () {
-    const forbidden = [
-      'package:flutter/',
-      'package:dio/',
-      'package:flutter_riverpod/',
-      'package:riverpod_annotation/',
-      'package:riverpod/',
+  test('domain은 허용된 대상만 import한다', () {
+    // 금지 목록이 아니라 허용 목록이다. core/network나 <feature>_di.dart를 거쳐
+    // dio·riverpod이 간접적으로 들어오는 경로까지 막는다.
+    const allowedPrefixes = [
+      'dart:',
+      'package:freezed_annotation/',
+      'package:meta/',
+      'package:collection/',
+      'package:liaison_app/core/error/',
+      'package:liaison_app/shared/models/',
     ];
     for (final file in files.where((f) => f.path.contains('/domain/'))) {
+      final owner = featurePattern.firstMatch(file.path)?.group(1);
+      final ownDomain = owner == null
+          ? null
+          : 'package:liaison_app/features/$owner/domain/';
+      for (final import in importsOf(file)) {
+        final allowed =
+            allowedPrefixes.any(import.startsWith) ||
+            (ownDomain != null && import.startsWith(ownDomain));
+        expect(
+          allowed,
+          isTrue,
+          reason:
+              '${file.path}: domain에서 "$import" import 금지. '
+              '허용: dart:, freezed_annotation, meta, collection, '
+              'core/error, shared/models, 같은 feature의 domain',
+        );
+      }
+    }
+  });
+
+  test('core와 shared는 features, app을 import하지 않는다', () {
+    final targets = files.where(
+      (f) => f.path.contains('lib/core/') || f.path.contains('lib/shared/'),
+    );
+    for (final file in targets) {
       for (final import in importsOf(file)) {
         expect(
-          forbidden.any(import.startsWith),
+          import.contains('liaison_app/features/') ||
+              import.contains('liaison_app/app/'),
           isFalse,
-          reason: '${file.path}: domain에서 "$import" import 금지',
+          reason:
+              '${file.path}: core/shared에서 "$import" import 금지. '
+              'core와 shared는 기능과 무관해야 한다',
         );
       }
     }
@@ -120,7 +151,9 @@ void main() {
   });
 
   test('features와 shared에서 Platform 분기를 쓰지 않는다', () {
-    final platformPattern = RegExp(r'\bPlatform\.(is[A-Z]\w*|operatingSystem)');
+    final platformPattern = RegExp(
+      r'\bPlatform\.(is[A-Z]\w*|operatingSystem)|\bdefaultTargetPlatform\b',
+    );
     final targets = files.where(
       (f) => f.path.contains('lib/features/') || f.path.contains('lib/shared/'),
     );

@@ -8,9 +8,12 @@ part of 'notification_service_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// initialize() 뒤 리스너·구독이 살아 있어야 하므로 keepAlive.
 
 @ProviderFor(notificationService)
 final notificationServiceProvider = NotificationServiceProvider._();
+
+/// initialize() 뒤 리스너·구독이 살아 있어야 하므로 keepAlive.
 
 final class NotificationServiceProvider
     extends
@@ -20,13 +23,14 @@ final class NotificationServiceProvider
           NotificationService
         >
     with $Provider<NotificationService> {
+  /// initialize() 뒤 리스너·구독이 살아 있어야 하므로 keepAlive.
   NotificationServiceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'notificationServiceProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -55,4 +59,4 @@ final class NotificationServiceProvider
 }
 
 String _$notificationServiceHash() =>
-    r'fb2c7ea99fbfd886dcf5e751bf6159bfc1b68da5';
+    r'4e00ddae357bce158d40c4df5e83dc15394f02cb';

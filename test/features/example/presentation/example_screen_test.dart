@@ -30,8 +30,13 @@ class _FailThenSucceedRepository implements ExampleRepository {
 }
 
 Widget _app(ExampleRepository repository) {
-  return ProviderScope(
+  // 루트 ProviderScope에 override를 직접 넣으면 riverpod_lint가
+  // scoped_providers_should_specify_dependencies를 낸다. 테스트용 컨테이너를 쓴다.
+  final container = ProviderContainer.test(
     overrides: [exampleRepositoryProvider.overrideWith((ref) => repository)],
+  );
+  return UncontrolledProviderScope(
+    container: container,
     child: const MaterialApp(home: ExampleScreen()),
   );
 }
@@ -78,5 +83,19 @@ void main() {
 
     expect(find.text('재시도 후 항목'), findsOneWidget);
     expect(find.text('네트워크에 연결할 수 없습니다'), findsNothing);
+  });
+
+  testWidgets('다시 시도가 또 실패해도 예외가 새지 않고 에러 화면이 유지된다', (tester) async {
+    await tester.pumpWidget(
+      _app(_StubRepository(() => throw const NetworkException())),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('다시 시도'));
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('네트워크에 연결할 수 없습니다'), findsOneWidget);
+    expect(find.text('다시 시도'), findsOneWidget);
   });
 }
