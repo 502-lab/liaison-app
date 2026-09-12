@@ -83,9 +83,9 @@ very_good_analysis 11이 Dart 3.13의 `unnecessary_type_name_in_constructor`를 
 
 Android flavor 정의는 `android/app/flavorizr.gradle.kts`에 있다.
 
-iOS는 flavor마다 Xcode scheme(`dev`, `prod`)과 configuration(`Debug-dev`, `Release-prod` 등 6개)이 있다. 값은 `ios/Flutter/<flavor><Config>.xcconfig`에 있고, `Info.plist`의 앱 이름과 LaunchScreen은 그 xcconfig의 `BUNDLE_DISPLAY_NAME`, `ASSET_PREFIX`를 읽는다. `ios/Podfile`의 `project 'Runner', {...}` 매핑은 이 configuration 이름과 맞아야 한다.
+iOS는 flavor마다 Xcode scheme(`dev`, `prod`)과 configuration(`Debug-dev`, `Release-prod` 등 6개)이 있다. flavor 없는 기본 `Runner` scheme과 `Debug`/`Release`/`Profile` configuration, 네이티브 테스트 타깃 `RunnerTests`는 지웠다. flavor 없이 빌드하면 iOS도 Android처럼 실패한다. 값은 `ios/Flutter/<flavor><Config>.xcconfig`에 있고, `Info.plist`의 앱 이름과 LaunchScreen은 그 xcconfig의 `BUNDLE_DISPLAY_NAME`, `ASSET_PREFIX`를 읽는다. `ios/Podfile`의 `project 'Runner', {...}` 매핑은 이 configuration 이름과 맞아야 한다.
 
-flavor를 추가하거나 Bundle ID를 바꿀 때는 `pubspec.yaml`의 `flavorizr` 항목을 고치고 `fvm dart run flutter_flavorizr -f`를 다시 실행한다. Xcode, CocoaPods, `xcodeproj` gem이 있어야 iOS 처리기가 돈다(`docs/SETUP.md` 1번). 프로젝트 파일을 통째로 다시 쓰는 도구라 실행 전에 `git status`가 깨끗한지 확인하고, 결과를 커밋 전에 검토한다.
+flavor를 추가하거나 Bundle ID를 바꿀 때는 `pubspec.yaml`의 `flavorizr` 항목을 고치고 `fvm dart run flutter_flavorizr -f`를 다시 실행한다. Xcode, CocoaPods, `xcodeproj` gem이 있어야 iOS 처리기가 돈다(`docs/SETUP.md` 1번). 프로젝트 파일을 통째로 다시 쓰는 도구라 실행 전에 `git status`가 깨끗한지 확인하고, 결과를 커밋 전에 검토한다. 실행 후 확인할 것: 기본 configuration이 되살아나지 않았는지, `ios/Flutter/<flavor><Config>.xcconfig`의 첫 줄이 `Pods-Runner.<config>-<flavor>.xcconfig`를 include하는지, xcconfig가 Runner의 Resources 단계에 들어가지 않았는지, 새 scheme에 Flutter의 SPM prepare PreAction이 있는지(각 flavor를 한 번 빌드하면 flutter가 넣는다).
 
 `env/*.json`에는 시크릿을 넣지 않는다. 값은 `AppConfig.fromEnvironment`에서 읽는다.
 

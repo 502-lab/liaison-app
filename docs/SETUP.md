@@ -6,6 +6,7 @@ macOS(Apple Silicon) 기준. 두 사람이 같은 절차를 따르도록 순서�
 
 ```bash
 # Homebrew가 없으면 https://brew.sh 참고
+brew tap leoafarias/fvm
 brew install fvm cocoapods
 brew install --cask android-studio   # 이미 있으면 생략
 ```
@@ -15,7 +16,14 @@ App Store에서 Xcode를 설치한 뒤:
 ```bash
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 sudo xcodebuild -runFirstLaunch
-sudo gem install xcodeproj   # flutter_flavorizr의 iOS 처리기가 사용한다
+```
+
+Xcode를 처음 열면 iOS 시뮬레이터 런타임을 내려받으라는 안내가 뜬다. 받아 둔다.
+
+flavor를 다시 생성할 때만(`fvm dart run flutter_flavorizr`) 시스템 Ruby에 `xcodeproj` gem이 필요하다. 평소에는 필요 없다.
+
+```bash
+sudo gem install xcodeproj          # 또는 gem install --user-install xcodeproj
 ```
 
 Android Studio를 한 번 실행해 SDK, 플랫폼 도구, 에뮬레이터를 설치한다.
@@ -60,13 +68,19 @@ fvm flutter devices
 
 # dev flavor 실행 (서버 없이 가짜 데이터)
 fvm flutter run --flavor dev -t lib/main_dev.dart --dart-define-from-file=env/dev.json
+
+# prod flavor
+fvm flutter run --flavor prod -t lib/main_prod.dart --dart-define-from-file=env/prod.json
 ```
 
-iOS 시뮬레이터에서 처음 실행할 때 CocoaPods 에러가 나면:
+`--flavor`, `-t`, `--dart-define-from-file` 세 가지는 항상 같은 flavor로 맞춘다.
 
-```bash
-cd ios && pod install && cd ..
-```
+**iOS**: 첫 빌드 때 `flutter`가 `pod install`을 자동으로 실행한다. 직접 실행해야 하면 `cd ios && pod install`.
+Xcode에서 열 때는 `ios/Runner.xcworkspace`를 열고 scheme은 `dev` 또는 `prod`를 고른다.
+기본 `Runner` scheme과 `Debug`/`Release` configuration은 지웠으므로 flavor 없이는 빌드되지 않는다 (Android와 같다).
+
+**Android 에뮬레이터에서 로컬 서버 접속**: 에뮬레이터의 `localhost`는 호스트가 아니라 에뮬레이터 자신이다.
+`env/dev.json`의 `API_BASE_URL`을 `http://10.0.2.2:8080`으로 바꾸고, http를 쓰려면 `android/app/src/dev/AndroidManifest.xml`에 `android:usesCleartextTraffic="true"`를 추가한다. 지금은 가짜 Repository 모드라 해당 없음.
 
 ## 6. 확인 명령
 
@@ -94,3 +108,5 @@ fvm dart fix --apply
 | `--flavor` 없이 실행해서 gradle 에러 | `--flavor dev` 추가 |
 | 시작하자마자 `StateError` (FLAVOR / API_BASE_URL) | `--dart-define-from-file=env/<flavor>.json`을 진입점과 맞춰 넘겼는지 확인 |
 | Xcode에서 `xcodebuild requires Xcode` | 1번의 `xcode-select` 명령 실행 |
+| Xcode에서 scheme 목록에 `dev`/`prod`가 없다 | `Runner.xcodeproj`가 아니라 `Runner.xcworkspace`를 열었는지 확인 |
+| `flutter run`이 iOS에서 `Runner` scheme을 찾는다 | `--flavor dev` 또는 `--flavor prod`를 빠뜨림 |

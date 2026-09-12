@@ -1,5 +1,5 @@
 name: liaison_app
-description: "A new Flutter project."
+description: "학원 숙제 알림장 앱 (학생 · 선생님 · 학부모)"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

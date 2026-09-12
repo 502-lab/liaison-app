@@ -51,7 +51,5 @@ app.*.map.json
 .fvm/
 
 # Firebase 설정 파일 (환경별로 각자 받아서 넣는다)
-android/app/src/dev/google-services.json
-android/app/src/prod/google-services.json
-ios/Runner/Firebase/dev/GoogleService-Info.plist
-ios/Runner/Firebase/prod/GoogleService-Info.plist
+**/google-services.json
+**/GoogleService-Info.plist
