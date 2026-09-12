@@ -1,0 +1,6 @@
+# prod flavor 아이콘. 원본과 재생성 방법은 tool/launcher_icons/README.md
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "tool/launcher_icons/prod.png"
+  remove_alpha_ios: true

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- 디자인 확정 전 placeholder. 시안이 나오면 이 파일과 dev.svg를 교체하고 README의 명령을 다시 실행한다. -->
+  <rect width="1024" height="1024" fill="#3B5BDB"/>
+  <text x="512" y="640" font-family="Helvetica, Arial, sans-serif" font-size="520" font-weight="bold" fill="#FFFFFF" text-anchor="middle">L</text>
+</svg>
