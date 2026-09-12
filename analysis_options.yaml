@@ -1,0 +1,17 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+plugins:
+  riverpod_lint: ^3.1.9   # pubspec.yaml의 riverpod_lint 버전과 맞춘다
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+    - android/**
+    - ios/**
+
+linter:
+  rules:
+    # 초반 팀에서 모든 public 멤버에 문서 주석을 요구하면 코드보다 주석 쓰는 시간이 길어진다.
+    public_member_api_docs: false

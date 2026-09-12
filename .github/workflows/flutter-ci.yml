@@ -1,0 +1,56 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read Flutter version from .fvmrc
+        id: fvmrc
+        run: echo "version=$(jq -r .flutter .fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvmrc.outputs.version }}
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Check generated files are committed
+        run: |
+          git add -A
+          if ! git diff --cached --exit-code; then
+            echo "::error::생성 파일이 최신이 아닙니다. build_runner를 실행하고 결과를 커밋하세요."
+            exit 1
+          fi
+
+      - name: Format
+        run: dart format --set-exit-if-changed lib test
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Analyze (riverpod_lint)
+        run: dart analyze --fatal-infos
+
+      - name: Test
+        run: flutter test

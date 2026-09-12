@@ -1,0 +1,5 @@
+{
+  "FLAVOR": "dev",
+  "API_BASE_URL": "http://localhost:8080",
+  "USE_FAKE_REPOSITORIES": true
+}
