@@ -1,0 +1,36 @@
+{
+  // flavor · 진입점 · env 파일은 항상 같은 flavor로 맞춘다 (docs/SETUP.md 5번).
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "args": ["--flavor", "dev", "--dart-define-from-file=env/dev.json"]
+    },
+    {
+      "name": "dev (profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main_dev.dart",
+      "args": ["--flavor", "dev", "--dart-define-from-file=env/dev.json"]
+    },
+    {
+      "name": "prod",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart",
+      "args": ["--flavor", "prod", "--dart-define-from-file=env/prod.json"]
+    },
+    {
+      "name": "prod (release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main_prod.dart",
+      "args": ["--flavor", "prod", "--dart-define-from-file=env/prod.json"]
+    }
+  ]
+}

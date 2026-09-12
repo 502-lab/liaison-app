@@ -15,8 +15,8 @@ Future<void> bootstrap(Flavor flavor) async {
 
   // 잡히지 않은 오류를 로그에 남긴다. Crashlytics 도입 시 여기서 보고한다.
   FlutterError.onError = (details) {
+    // presentError가 콘솔에 전체 오류를 출력한다. Crashlytics 도입 시 여기서 보고.
     FlutterError.presentError(details);
-    debugPrint('Uncaught Flutter error: ${details.exceptionAsString()}');
   };
   PlatformDispatcher.instance.onError = (error, stack) {
     debugPrint('Uncaught platform error: $error\n$stack');

@@ -20,9 +20,9 @@ Dio dio(Ref ref) {
   );
   dio.interceptors.add(AuthInterceptor(ref.watch(tokenStorageProvider)));
   if (config.flavor == Flavor.dev) {
-    dio.interceptors.add(
-      LogInterceptor(responseBody: true, requestHeader: false),
-    );
+    // 응답 본문(responseBody)에는 학생·학부모 개인정보가 들어갈 수 있어
+    // 기본값(false)을 유지한다. 디버깅 중 필요하면 responseBody: true로 잠시 켠다.
+    dio.interceptors.add(LogInterceptor(requestHeader: false));
   }
   ref.onDispose(() => dio.close(force: true));
   return dio;
