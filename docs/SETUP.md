@@ -41,8 +41,8 @@ fvm flutter doctor   # 빨간 X가 없어야 한다
 앞으로 `flutter`, `dart` 명령은 항상 `fvm flutter`, `fvm dart`로 쓴다.
 전역 Flutter를 따로 설치하지 않는다. 버전이 어긋나면 빌드 결과가 달라진다.
 
-VS Code: fvm이 만든 `.vscode/settings.json`이 SDK 경로를 가리킨다. Flutter 확장만 설치하면 된다.
-Android Studio: `Settings > Languages & Frameworks > Flutter`에서 SDK 경로를 `<프로젝트>/.fvm/flutter_sdk`로 지정한다.
+VS Code: fvm이 만든 `.vscode/settings.json`이 SDK 경로를 가리킨다. Flutter 확장만 설치하면 된다. 실행 구성(`dev`, `prod` 등)은 `.vscode/launch.json`에 있어 F5로 바로 실행된다.
+Android Studio: `Settings > Languages & Frameworks > Flutter`에서 SDK 경로를 `<프로젝트>/.fvm/flutter_sdk`로 지정한다. 실행 구성 `dev`, `prod`는 `.idea/runConfigurations/`에 커밋돼 있어 열면 바로 보인다.
 
 ## 3. Android 라이선스
 
@@ -73,7 +73,7 @@ fvm flutter run --flavor dev -t lib/main_dev.dart --dart-define-from-file=env/de
 fvm flutter run --flavor prod -t lib/main_prod.dart --dart-define-from-file=env/prod.json
 ```
 
-`--flavor`, `-t`, `--dart-define-from-file` 세 가지는 항상 같은 flavor로 맞춘다.
+`--flavor`, `-t`, `--dart-define-from-file` 세 가지는 항상 같은 flavor로 맞춘다. IDE 실행 구성을 쓰면 자동으로 맞는다.
 
 **iOS**: 첫 빌드 때 `flutter`가 `pod install`을 자동으로 실행한다. 직접 실행해야 하면 `cd ios && pod install`.
 Xcode에서 열 때는 `ios/Runner.xcworkspace`를 열고 scheme은 `dev` 또는 `prod`를 고른다.
