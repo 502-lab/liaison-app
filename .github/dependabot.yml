@@ -1,0 +1,22 @@
+# 공통 문서(docs/common) 서브모듈은 매일 확인해서 최신 버전 갱신 PR을 만든다.
+# 의존성·액션 보안 업데이트는 저장소 설정의 Dependabot security updates가 따로 처리한다.
+version: 2
+updates:
+  - package-ecosystem: gitsubmodule
+    directory: /
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: chore
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
