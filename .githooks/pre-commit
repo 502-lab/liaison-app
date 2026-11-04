@@ -1,0 +1,11 @@
+#!/bin/sh
+# 커밋 전 비밀키 검사. 설치: git config core.hooksPath .githooks
+# gitleaks가 없으면 경고만 하고 넘어간다(CI에서 한 번 더 검사함). 설치: brew install gitleaks
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --no-banner || {
+    echo "✖ 비밀값으로 보이는 내용이 있어 커밋을 멈췄습니다. 값을 지우고 환경변수로 옮기세요. 이미 푸시한 적이 있으면 키를 교체하세요."
+    exit 1
+  }
+else
+  echo "ℹ gitleaks가 설치돼 있지 않아 커밋 전 비밀키 검사를 건너뜁니다(brew install gitleaks)."
+fi
