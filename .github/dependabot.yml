@@ -2,7 +2,9 @@
 # - 공통 문서(docs/common) 서브모듈: 매일 확인(규칙 변경이 빨리 반영되도록). 서브모듈이 하나라 PR은 1건만 열리고, 더 새 버전이 나오면 그 PR이 새것으로 바뀐다.
 # - 패키지: 매월 확인하고, 작은 업데이트(minor·patch)는 PR 하나로 묶는다. 큰 업데이트(major)만 따로 연다.
 # - 액션: 매월 확인하고 major까지 전부 PR 하나로 묶는다(워크플로가 PR에서 바로 돌아 깨지면 그 PR에서 보인다).
-# - 보안 업데이트는 저장소 설정(Dependabot security updates)이 이 일정과 상관없이 바로 따로 올린다.
+# - 대기 기간(cooldown): 새 버전이 나온 지 7일(major는 30일)이 지나야 PR을 연다. 막 올라온 악성 버전을 피하기 위해서다.
+#   우리 공통 문서 서브모듈에는 걸지 않는다.
+# - 보안 업데이트는 저장소 설정(Dependabot security updates)이 이 일정·대기 기간과 상관없이 바로 따로 올린다.
 version: 2
 updates:
   - package-ecosystem: gitsubmodule
@@ -16,6 +18,9 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
     open-pull-requests-limit: 3
     groups:
       pub-minor-patch:
@@ -31,6 +36,8 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns: ["*"]
