@@ -1,0 +1,61 @@
+name: 버그
+description: 동작이 기대와 다를 때
+title: "[버그] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **공개 저장소입니다.** 이슈와 댓글은 누구나 봅니다.
+        - 실제 학생·선생님·보호자·학원 정보와 실데이터 화면을 넣지 마세요. 스크린샷은 가짜 데이터로만 찍습니다.
+        - 비밀값, 운영 서버 주소·계정, 기준값을 넣지 마세요. 로그는 이름·토큰·입력값·사진 주소를 지우고 붙입니다.
+        - **보안 취약점은 이슈로 올리지 마세요.** 저장소 담당에게 직접 알립니다.
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 순서
+      description: 처음부터 버그가 보일 때까지 순서대로 적습니다.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 결과
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 결과
+      description: 오류 메시지나 로그는 이름·토큰·입력값·사진 주소를 지우고 붙입니다.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 실행 환경
+      description: "백엔드는 브랜치·커밋·실행 방법(로컬 / 개발 서버)·API 경로, 웹은 브라우저·OS·화면 경로·역할, 앱은 기기·OS·앱 빌드·역할을 적습니다. 주소와 경로의 ID 값은 지웁니다."
+      placeholder: "예: Chrome 131 · macOS, /teacher/homework, 선생님"
+    validations:
+      required: true
+  - type: input
+    id: wbs
+    attributes:
+      label: WBS ID
+      description: 관련 WBS 항목이 있으면 적습니다.
+      placeholder: "예: 1.0.5"
+  - type: checkboxes
+    id: public-check
+    attributes:
+      label: 공개 저장소 확인
+      options:
+        - label: 가짜 데이터로 재현했고, 실제 학생·학원 정보가 없습니다(스크린샷 포함)
+          required: true
+        - label: 로그·스크린샷에 이름, 토큰, 입력값, 사진 주소, 서버 주소·계정이 없습니다
+          required: true
+        - label: 보안 취약점이 아닙니다(취약점이면 이 이슈 대신 저장소 담당에게 직접 알립니다)
+          required: true

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 공통 규칙·용어집
+    url: https://github.com/502-lab/liaison-docs
+    about: 용어와 공통 규칙은 공통 문서를 먼저 봐 주세요.

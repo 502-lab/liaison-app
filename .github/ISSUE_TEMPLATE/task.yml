@@ -1,0 +1,55 @@
+name: 작업·제안
+description: 할 일이나 바꾸자는 제안(WBS 작업은 Project 항목을 씁니다)
+title: "[WBS ID] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **공개 저장소입니다.** 이슈와 댓글은 누구나 봅니다.
+        - 실제 학생·선생님·보호자·학원 정보와 실데이터 화면을 넣지 마세요. 스크린샷은 가짜 데이터로만 찍습니다.
+        - 비밀값, 운영 서버 주소·계정, 기준값을 넣지 마세요. 로그는 이름·토큰·입력값·사진 주소를 지우고 붙입니다.
+        - **보안 취약점은 이슈로 올리지 마세요.** 저장소 담당에게 직접 알립니다.
+  - type: markdown
+    attributes:
+      value: |
+        - WBS에 이미 있는 작업은 이슈를 따로 만들지 않고 Project 항목을 씁니다. 그 항목을 나눌 때만 하위 이슈로 만듭니다.
+        - 제목은 `[WBS ID] 할 일`로 씁니다. 웹 화면을 와이어프레임 영역으로 나눈 이슈는 `[영역 ID] 할 일`로 씁니다(예: `[1.0.21-①] 학생 등록 퍼블리싱`). WBS에 없는 제안은 `[제안] 할 일`로 씁니다.
+        - 나눈 이슈가 모두 닫히면(PR 병합) WBS 항목을 Done으로 바꿉니다.
+        - 범위를 바꾸는 제안은 PM과, 데이터를 새로 모으거나 보관 기간이 바뀌는 제안은 법무와 먼저 이야기합니다.
+  - type: input
+    id: wbs
+    attributes:
+      label: WBS ID
+      description: WBS 항목의 일부면 적습니다. 영역으로 나눴으면 영역 ID를 적습니다. WBS에 없는 제안이면 비워 둡니다.
+      placeholder: "예: 1.0.10 또는 1.0.21-①"
+  - type: textarea
+    id: background
+    attributes:
+      label: 배경
+      description: 왜 필요한지 적습니다.
+    validations:
+      required: true
+  - type: textarea
+    id: work
+    attributes:
+      label: 할 일
+      placeholder: |
+        -
+  - type: textarea
+    id: done
+    attributes:
+      label: 완료 기준
+      description: 끝났다고 판단할 조건입니다. 테스트를 포함합니다.
+      placeholder: |
+        - [ ]
+        - [ ] 테스트 추가
+    validations:
+      required: true
+  - type: checkboxes
+    id: public-check
+    attributes:
+      label: 공개 저장소 확인
+      options:
+        - label: 실제 학생·학원 정보, 비밀값, 서버 주소·계정이 없습니다
+          required: true
