@@ -68,7 +68,7 @@ very_good_analysis 11이 Dart 3.13의 `unnecessary_type_name_in_constructor`를 
 - dio 예외는 Repository 구현체에서 `mapDioException`으로 변환한다. 화면은 `DioException`을 모른다.
 - Repository 구현체는 `on DioException`은 `mapDioException`으로, 그 외 예외(`on Object`)는 `UnknownException`으로 감싼다. 화면에는 항상 `AppException`만 도달한다.
 - 전역 처리(토큰 만료 시 로그인 이동 등)는 `core/network/` 인터셉터와 `app/router/`의 redirect가 맡는다.
-- `bootstrap.dart`가 `FlutterError.onError`와 `PlatformDispatcher.onError`로 잡히지 않은 오류를 로그에 남긴다 (Crashlytics 도입 시 여기서 보고).
+- `bootstrap.dart`가 `FlutterError.onError`와 `PlatformDispatcher.onError`로 잡히지 않은 오류를 기기 로그에만 남긴다. 오류 수집 SDK(Crashlytics·Sentry 등)는 쓰지 않는다(공통 문서 AI_RULES 1-4: 넣으려면 먼저 법무 확인과 처리방침 수정).
 - `UnknownException`의 `message`는 사용자용 문구이고 기술 정보는 `debugMessage`에 담는다.
 
 ## 환경(flavor)
