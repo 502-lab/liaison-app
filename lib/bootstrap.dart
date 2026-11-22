@@ -13,7 +13,8 @@ import 'package:liaison_app/core/riverpod/retry_policy.dart';
 Future<void> bootstrap(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 잡히지 않은 오류를 기기 로그에만 남긴다. 오류 수집 SDK(Crashlytics·Sentry 등)는 쓰지 않는다(AI_RULES 1-4).
+  // 잡히지 않은 오류를 기기 로그에만 남긴다.
+  // 오류 수집 SDK(Crashlytics·Sentry 등)는 쓰지 않는다(AI_RULES 1-4).
   FlutterError.onError = (details) {
     // presentError가 콘솔에 전체 오류를 출력한다. 밖으로 보내지 않는다.
     FlutterError.presentError(details);
